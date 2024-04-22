@@ -1,18 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+
+Working Website Link:https://chat-8kfjc5f5j-roshans-projects-2d297b0f.vercel.app/
 
 ## Getting Started
 
-First, run the development server:
+### Installation
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/RoshanK24/Task-Management.git
+    ```
+
+3. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+### Running the Application
+
+1. Start the development server:
+
+    ```bash
+    npm run dev 
+    ```
+
+2. Open your browser and go to [http://localhost:5173](http://localhost:5173) to view the application.
+
+### Additional Commands
+
+- To build the production-ready version:
+
+    ```bash
+    npm run build
+    ```
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
