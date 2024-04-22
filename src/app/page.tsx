@@ -4,6 +4,7 @@ import SideBar from "@/components/sidebar/SideBar";
 
 import { createClient } from '../../utils/supabase/client' 
 import { useEffect, useState } from "react";
+import { gotoSignIn } from "./signup/acton";
 
 interface Message {
   userText: string;
@@ -91,14 +92,23 @@ export default function Home() {
     const isDarkItem = localStorage.getItem('isDark');
     if (isDarkItem !== null && isDark!==JSON.parse(isDarkItem)) {
       const isdark = JSON.parse(isDarkItem); 
-      setIsDark(isdark)
-      console.log(isdark);
+      setIsDark(isdark) 
     }  
   },[])
 
   useEffect(() => {
     localStorage.setItem('isDark', JSON.stringify(isDark)); 
   }, [isDark]);
+
+  useEffect(()=>{
+    const checkuser = async() => {
+      const userData = await supabase.auth.getUser();
+      if(!userData.data.user){
+        gotoSignIn();
+      }
+    }
+    checkuser();
+  },[])
 
   return (
     <main className={`flex min-h-screen w-screen ${isDark? "dark":""}`}> 
