@@ -32,7 +32,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({userText, chatBotText}) => {
               <div className="dot bg-black dark:bg-white" />
             </div> 
           </>):(<>
-            <p className='ms-8 text-sm'><Markdown>{chatBotText}</Markdown></p> 
+            <div className='ms-8 text-sm'><Markdown>{chatBotText}</Markdown></div> 
           </>)} 
         </div>
         

@@ -42,8 +42,7 @@ const PromptInputBar: React.FC<SearchBarProps> = ({allMessage, setAllMessage, ch
     setUserMessage(""); 
  
     // generating text using Gemini-pro
-    const text: string = await generateText(userMessage); 
-    console.log(userInput, text) 
+    const text: string = await generateText(userMessage);  
 
     const finalMessages = [...previousAllMessage, {userText: userInput, chatBotText: text}];
     setAllMessage(finalMessages);
