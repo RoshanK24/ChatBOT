@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createClient } from "../../../utils/supabase/client";
 import { v4 as uuidv4 } from 'uuid';
 
+
 interface Message {
   userText: string;
   chatBotText: string;
@@ -17,6 +18,7 @@ interface SearchBarProps {
 }
 
 const PromptInputBar: React.FC<SearchBarProps> = ({allMessage, setAllMessage, chatId, setChatId }) => { 
+  
   const [chatBotText, setChatBotText] = useState<string>("Hello! I'm doing well, thank you. How about you?"); 
   const [ userMessage, setUserMessage] = useState<string>('');
   const supabase = createClient()

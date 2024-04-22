@@ -27,24 +27,11 @@ const Profile = () => {
         getuser()
     },[])
 
-  return (
-    <DropdownMenu>
-        <DropdownMenuTrigger>
+  return ( 
         <div className="py-2 w-64 ms-3 ps-2 mt-3 mb-4 hover:dark:bg-[#2b2a2a] hover:bg-slate-300 hover:cursor-pointer me-5 rounded-lg flex items-center gap-2">
             <img className="h-8 w-8 rounded-full" src="https://i.pinimg.com/736x/71/f8/11/71f811a36fdbe4470af6ce0dba53fa25.jpg" alt="user image"></img>
             <p className="text-sm font-semibold">{currUser}</p>
-        </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-            <DropdownMenuLabel className="p-0">
-            <form action="/auth/signout" method="post">
-              <Button  type="submit" className='w-full m-0'>
-                Sign out
-              </Button>
-            </form>
-            </DropdownMenuLabel>
-        </DropdownMenuContent> 
-    </DropdownMenu>
+        </div> 
 
   )
 }

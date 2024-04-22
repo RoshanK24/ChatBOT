@@ -18,11 +18,16 @@ export default function Home() {
   const [chatId, setChatId] = useState<string | null>(null);
   const [allChat, setAllChat] = useState<null | Chat[]>(null);
   const [allMessage, setAllMessage] = useState<Message[]>([]);
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    const storedIsDark = localStorage.getItem('isDark'); 
-    return storedIsDark ? JSON.parse(storedIsDark) : true;
-  });
 
+  const [isDark, setIsDark] = useState<boolean>(true)
+  //   const ISSERVER = typeof window === "undefined";
+  //   if(!ISSERVER) {  
+  //     const storedIsDark = localStorage.getItem('isDark');  
+  //     return storedIsDark ? JSON.parse(storedIsDark) : true;
+  //   } 
+  // });
+
+ 
   const supabase = createClient();
 
   useEffect(()=>{
@@ -81,6 +86,15 @@ export default function Home() {
     }; 
     fetchMessages(); 
   }, [chatId])
+
+  useEffect(()=>{
+    const isDarkItem = localStorage.getItem('isDark');
+    if (isDarkItem !== null && isDark!==JSON.parse(isDarkItem)) {
+      const isdark = JSON.parse(isDarkItem); 
+      setIsDark(isdark)
+      console.log(isdark);
+    }  
+  },[])
 
   useEffect(() => {
     localStorage.setItem('isDark', JSON.stringify(isDark)); 
