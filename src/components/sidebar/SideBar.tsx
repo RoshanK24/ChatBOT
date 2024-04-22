@@ -64,7 +64,12 @@ const SideBar: React.FC<SideBarProps> = ({ allChat, setAllChat, chatId, setChatI
         <div key={chatItem.id} className={`hover:dark:bg-[#2b2a2a] hover:bg-slate-300 flex items-center hover:cursor-pointer rounded-lg w-64 mt-[0.1rem] ${
             chatItem.id === chatId ? "dark:bg-[#2b2a2a] bg-slate-300" : "" }`}
             >
-            <p className="text-sm overflow-hidden py-2 ps-3 w-full rounded-lg" onClick={() => setChatId(chatItem.id)}> {chatItem.chat_text} </p>
+            <div className="w-[14rem]">
+                <p className="text-sm overflow-hidden py-2 ps-3 w-full rounded-lg" onClick={() => setChatId(chatItem.id)} style={{
+                whiteSpace: 'nowrap', 
+                overflow: 'hidden',  
+            }}> {chatItem.chat_text} </p>
+            </div>
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger>

@@ -4,7 +4,7 @@ import SideBar from "@/components/sidebar/SideBar";
 
 import { createClient } from '../../utils/supabase/client' 
 import { useEffect, useState } from "react";
-import { gotoSignIn } from "./signup/acton";
+import { gotoSignIn } from "./signup/acton";  
 
 interface Message {
   userText: string;
@@ -20,13 +20,7 @@ export default function Home() {
   const [allChat, setAllChat] = useState<null | Chat[]>(null);
   const [allMessage, setAllMessage] = useState<Message[]>([]);
 
-  const [isDark, setIsDark] = useState<boolean>(true)
-  //   const ISSERVER = typeof window === "undefined";
-  //   if(!ISSERVER) {  
-  //     const storedIsDark = localStorage.getItem('isDark');  
-  //     return storedIsDark ? JSON.parse(storedIsDark) : true;
-  //   } 
-  // });
+  const [isDark, setIsDark] = useState<boolean>(true) 
 
  
   const supabase = createClient();
@@ -68,7 +62,8 @@ export default function Home() {
           .from('messages')
           .select('message_text, reply_text')
           .eq('sender_id', userData.data.user?.id) 
-          .eq('chat_id', chatId);
+          .eq('chat_id', chatId)
+          .order("created_at", { ascending: true });  
 
         if (error) {
           throw new Error(`Error fetching messages: ${error.message}`);
@@ -107,7 +102,7 @@ export default function Home() {
         gotoSignIn();
       }
     }
-    checkuser();
+    checkuser();  
   },[])
 
   return (

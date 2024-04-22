@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input"
 import { useState } from "react";
 import { createClient } from "../../../utils/supabase/client";
 import { v4 as uuidv4 } from 'uuid';
+import { generateText } from "../../../utils/gemini/textgeneration";
 
 
 interface Message {
@@ -18,12 +19,12 @@ interface SearchBarProps {
 }
 
 const PromptInputBar: React.FC<SearchBarProps> = ({allMessage, setAllMessage, chatId, setChatId }) => { 
-  
-  const [chatBotText, setChatBotText] = useState<string>("Hello! I'm doing well, thank you. How about you?"); 
+  const [disableInput, setDisableInput] = useState<boolean>(false)
   const [ userMessage, setUserMessage] = useState<string>('');
   const supabase = createClient()
 
   const handleSendMessage = async () => {
+    setDisableInput(true);
     const userData = await supabase.auth.getUser() 
     if(!userData.data.user){
       return
@@ -34,12 +35,25 @@ const PromptInputBar: React.FC<SearchBarProps> = ({allMessage, setAllMessage, ch
 
     const generatedchatId = chatId || uuidv4();  
 
+    const userInput = userMessage;
+    const previousAllMessage = [...allMessage];
+    const  updatedMessages = [...allMessage, {userText: userInput, chatBotText: ''}]
+    setAllMessage(updatedMessages);
+    setUserMessage(""); 
+ 
+    // generating text using Gemini-pro
+    const text: string = await generateText(userMessage); 
+    console.log(userInput, text) 
+
+    const finalMessages = [...previousAllMessage, {userText: userInput, chatBotText: text}];
+    setAllMessage(finalMessages);
+
     if (!chatId) {
       try { 
         const {error: messageError} = await supabase.from("chats").insert({
           id: generatedchatId,
           user_id: userData.data.user?.id,
-          chat_text: userMessage,
+          chat_text: userInput,
           created_at: new Date().toISOString(),
         });
 
@@ -59,18 +73,16 @@ const PromptInputBar: React.FC<SearchBarProps> = ({allMessage, setAllMessage, ch
             chat_id: generatedchatId,
             sender_id: userData.data.user?.id, 
             message_text: userMessage.trim(),
-            reply_text: chatBotText,  
+            reply_text: text,  
             created_at: new Date().toISOString(),
           },]);
 
     if (messageError) {
       console.error('Error sending message:', messageError.message);
+      setDisableInput(false);
       return;
-    }
-    else{
-      setAllMessage([...allMessage, {userText: userMessage.trim(), chatBotText: chatBotText.trim()}]) 
-      setUserMessage("");
     } 
+    setDisableInput(false);
   };
 
   const handleKeyPress = (event:any) => {
@@ -83,6 +95,7 @@ const PromptInputBar: React.FC<SearchBarProps> = ({allMessage, setAllMessage, ch
   return (
     <div className="w-3/5 relative"> 
         <Input className="border-gray-500 mb-4 min-h-12 max-h-40 text-wrap shadow-sm dark:text-white"  
+        disabled={disableInput}
         value={userMessage}
         onChange={(e) => setUserMessage(e.target.value)}
         onKeyPress={handleKeyPress}

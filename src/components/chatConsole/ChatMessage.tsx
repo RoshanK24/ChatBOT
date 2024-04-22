@@ -1,5 +1,6 @@
 'use clinet'
 import React from 'react'
+import Markdown from 'react-markdown'
 
 interface ChatMessageProps { 
   userText: string;
@@ -24,8 +25,17 @@ const ChatMessage: React.FC<ChatMessageProps> = ({userText, chatBotText}) => {
           <p className='text-base font-semibold'>ChatBOT</p>
         </div>
         <div>
-        <p className='ms-8 text-sm'>{chatBotText}</p>
+          {!chatBotText.length ? (<>
+            <div className="loader-container">
+              <div className="dot bg-black dark:bg-white" />
+              <div className="dot bg-black dark:bg-white" />
+              <div className="dot bg-black dark:bg-white" />
+            </div> 
+          </>):(<>
+            <p className='ms-8 text-sm'><Markdown>{chatBotText}</Markdown></p> 
+          </>)} 
         </div>
+        
       </div>
     </div>
   )
