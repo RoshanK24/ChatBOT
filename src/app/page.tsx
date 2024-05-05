@@ -41,7 +41,7 @@ export default function Home() {
                     throw new Error(`Error fetching chat data: ${chatError.message}`);
                 }
     
-                if (chatData) {
+                if (chatData) { 
                     setAllChat(chatData);  
                 }
             } catch (error) {
@@ -107,8 +107,9 @@ export default function Home() {
 
   return (
     <main className={`flex min-h-screen w-screen ${isDark? "dark":""}`}> 
-      <SideBar allChat={allChat} setAllChat={setAllChat} chatId={chatId} setChatId={setChatId}/>
-      <MainContent chatId={chatId} setChatId={setChatId} allMessage={allMessage} setAllMessage={setAllMessage} isDark={isDark} setIsDark={setIsDark}/>
+    <div className="md:block hidden"><SideBar allChat={allChat} setAllChat={setAllChat} chatId={chatId} setChatId={setChatId}/></div>
+      
+      <MainContent chatId={chatId} setChatId={setChatId} allMessage={allMessage} setAllMessage={setAllMessage} isDark={isDark} setIsDark={setIsDark} setAllChat={setAllChat} allChat={allChat}/>
     </main>
   );
 }

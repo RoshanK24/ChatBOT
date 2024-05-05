@@ -1,10 +1,10 @@
 import { GoogleGenerativeAI,GenerateContentResult } from "@google/generative-ai";
  
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_API_KEY!);
+const model = genAI.getGenerativeModel({ model: "gemini-pro" });
  
 export async function generateText(userInput: string): Promise<string> {
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
         const result: GenerateContentResult = await model.generateContent(userInput);
  
